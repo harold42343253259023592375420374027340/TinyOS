@@ -1,6 +1,6 @@
 #pragma once
-#include "stdint.h"
-
+#include "../../stdint.h"
+#include "vga.h"
 #define COLOR8_BLACK 0
 #define COLOR8_LIGHT_GRAY 7
 

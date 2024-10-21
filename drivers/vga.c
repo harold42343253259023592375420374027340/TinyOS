@@ -1,5 +1,5 @@
-#include "vga.h"
-#include "font_map.h"
+#include "include/vga.h"
+#include "include/font_map.h"
 uint16_t column=0;
 uint16_t line=0;
 uint16_t* const vga=(uint16_t* const)0xB8000;
@@ -37,16 +37,7 @@ void scrollUp(){
     }
 }
 void renderChar(char c, uint16_t x, uint16_t y) {
-    const uint8_t* bitmap = fontMap[(uint8_t)c];
-    for (uint8_t i = 0; i < 8; i++) {
-        for (uint8_t j = 0; j < 8; j++) {
-            if (bitmap[i] & (1 << j)) {
-                vga[(y + i) * WIDTH + (x + j)] = currentColor;
-            } else {
-                vga[(y + i) * WIDTH + (x + j)] = ' ' | currentColor;
-            }
-        }
-    }
+    //pass
 }
 void print(const char* s) {
     while (*s) {
@@ -56,8 +47,8 @@ void print(const char* s) {
             if (column == WIDTH) {
                 newLine();
             }
-            renderChar(*s, column , line );
-            // vga[line*WIDTH+column]=*s|currentColor;//normal font
+            // renderChar(*s, column , line );
+            vga[line*WIDTH+column]=*s|currentColor;//normal font
             column++;
         }
         s++;

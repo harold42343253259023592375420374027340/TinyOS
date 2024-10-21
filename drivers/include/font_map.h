@@ -1,8 +1,18 @@
 #ifndef FONT_MAP_H
 #define FONT_MAP_H
-#include "stdint.h"
+#include "../../stdint.h"
 
 const uint8_t fontMap[128][8] = {
+    [32] = { // ' '
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+        0b00000000,
+    },
     // Uppercase A-Z
     [65] = { // 'A'
         0b00011000,
