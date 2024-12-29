@@ -1,12 +1,13 @@
-#include "drivers/include/vga.h"
-#include "drivers/include/keyboard.h"
+#include "drivers/include/io.h"
+#include "drivers/include/cpu.h"
+
 void kmain(void);
 void kmain(void){
-    if (testVGAMemory()) {
-        print("VGA memory test passed!\n");
-    } else {
-        print("VGA memory test failed!\n");
+    puts("Hello, World!");
+    char key;
+    while (1) {
+        key = readKey();
+        putchar(key);
     }
-    print("Hello, World!\n");
-    simple_keyboard_driver();
+    
 }
