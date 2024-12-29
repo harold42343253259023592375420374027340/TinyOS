@@ -1,3 +1,4 @@
 objects/*.o
 *.iso
 .vscode
+kernel
