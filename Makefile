@@ -1,5 +1,5 @@
 run: OS.iso
-	qemu-system-i386 -cdrom OS.iso
+	qemu-system-x86_64 -cdrom OS.iso
 debug: OS.iso
 	qemu-system-i386 -s -S -cdrom OS.iso &
 	gdb OS/boot/kernel -ex "target remote localhost:1234"

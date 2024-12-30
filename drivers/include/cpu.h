@@ -1,3 +1,8 @@
+/* 
+    Author: Harold1970
+    Date created: 12/29/2024
+*/
+
 #ifndef CPU_H
 #define CPU_H
 #include "../../stdint.h"

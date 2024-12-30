@@ -1,5 +1,11 @@
+/* 
+    Author: Harold1970
+    Date created: 12/29/2024
+*/
+
 #include "include/io.h" 
 #include "../stdint.h"
+#include "include/keymaps.h"
 #define halt outw(0x604, 0x2000)
 
 
@@ -96,19 +102,16 @@ void clearScrn() {
         vga[i] = 0x0F00; // Clear screen to white text on black background
     }
 }
-char scanCodes[128] = {
-    '\0', '\1', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
-    '\3', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\6',
-    '\4', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '\e',
-    ' ', 'z', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', ' ', 
-    '\t', '\n', ' ', '\t', '\n'
-};
+
 char translateScanCode(uint8_t scanCode) {
     return scanCodes[scanCode];
 }
 char readKey(void) {
     while ((inb(KEYBOARD_STATUS_PORT) & 0x01) == 0);
-    return translateScanCode(inb(KEYBOARD_DATA_PORT));
+    
+    uint8_t scancode = inb(KEYBOARD_DATA_PORT);
+    return (scancode & 0x80) ? 0 : translateScanCode(scancode);
+
 }
 
 
