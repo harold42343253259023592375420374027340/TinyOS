@@ -8,8 +8,8 @@ all: kernel.bin OS.iso
 kernel.o: kernel.c
 	gcc -m32 -g -fno-stack-protector -fno-builtin -c kernel.c -o objects/kernel.o
 
-io.o: drivers/io.c
-	gcc -m32 -g -fno-stack-protector -fno-builtin -c drivers/io.c -o objects/io.o
+io.o: drivers/stdio.c
+	gcc -m32 -g -fno-stack-protector -fno-builtin -c drivers/stdio.c -o objects/stdio.o
 
 cpu.o : drivers/cpu.c
 	gcc -m32 -g -fno-stack-protector -fno-builtin -c drivers/cpu.c -o objects/cpu.o
@@ -18,7 +18,7 @@ boot.o: boot.s
 	nasm -f elf32 boot.s -o objects/boot.o
 
 kernel.bin: kernel.o io.o boot.o cpu.o linker.ld
-	ld -m elf_i386 -T linker.ld -o kernel objects/io.o objects/cpu.o objects/kernel.o objects/boot.o
+	ld -m elf_i386 -T linker.ld -o kernel objects/stdio.o objects/cpu.o objects/kernel.o objects/boot.o
 	cp kernel OS/boot
 
 OS.iso: kernel.bin
