@@ -14,11 +14,14 @@ io.o: drivers/stdio.c
 cpu.o : drivers/cpu.c
 	gcc -m32 -g -fno-stack-protector -fno-builtin -c drivers/cpu.c -o objects/cpu.o
 
+strings.o : drivers/strings.c
+	gcc -m32 -g -fno-stack-protector -fno-builtin -c drivers/strings.c -o objects/strings.o
+
 boot.o: boot.s
 	nasm -f elf32 boot.s -o objects/boot.o
 
-kernel.bin: kernel.o io.o boot.o cpu.o linker.ld
-	ld -m elf_i386 -T linker.ld -o kernel objects/stdio.o objects/cpu.o objects/kernel.o objects/boot.o
+kernel.bin: kernel.o io.o boot.o cpu.o strings.o linker.ld
+	ld -m elf_i386 -T linker.ld -o kernel objects/stdio.o objects/cpu.o objects/kernel.o objects/boot.o objects/strings.o
 	cp kernel OS/boot
 
 OS.iso: kernel.bin

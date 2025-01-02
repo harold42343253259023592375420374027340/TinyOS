@@ -50,6 +50,16 @@ void putc(char c) {
         }
         update_cursor(CursorX, CursorY);
         return;
+    } 
+    if (c == '\b') {
+        CursorX--;
+        putc(' ');
+        CursorX--;
+        if (CursorX < 0) {
+            CursorX = 0;
+        }
+        update_cursor(CursorX, CursorY);
+        return;
     }
 
     if (c != '\0') {
@@ -96,6 +106,31 @@ char getc(void) {
 
 }
 
+char* gets(char *ubuffer, int len) {
+    int writePtr = 0;
+    char c;
+    for (int i = 0; i < len;i++) {
+        ubuffer[i] = 0;
+    }
+    while (writePtr < 1024) {
+        c = getc();
+
+        if (c == '\n') break;
+        else if (c == '\b') {
+            if (writePtr - 1 > 0) {
+                writePtr--;
+                putc('\b');
+                ubuffer[writePtr] = ' ';
+            }
+        }
+        else {
+            putc(c);
+            ubuffer[writePtr] = c;
+            writePtr++;
+        }
+    }
+    return ubuffer;
+}
 
 void testChar() {
     for (int i = 0; i <= 128; i++) {

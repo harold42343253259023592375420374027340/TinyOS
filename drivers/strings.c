@@ -1,8 +1,8 @@
 #include "include/strings.h"
 
 
-int strcmp(char *str1, char *str2) {
-    for (int ptr = 0; str1[ptr] != '\0' && str2[ptr] != '\0'; ptr++) {
+int strcmp(char *str1, int len, char *str2) {
+    for (int ptr = 0; ptr < len; ptr++) {
         if (str1[ptr] != str2[ptr]) {
             return 1;
         }

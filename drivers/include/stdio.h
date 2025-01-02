@@ -62,7 +62,7 @@ void putc(char c);
 void puts(const char* message);
 void clearScrn(void);
 char getc(void);
-char* scanf(int charRC);
+char* gets(char *ubuffer, int len);
 void testChar();
 void putint(int input);
 void mvCursor(int nx, int ny);
