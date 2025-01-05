@@ -2,53 +2,51 @@
 #include "drivers/include/stdio.h"
 #include "drivers/include/strings.h"
 
-
-
-
-void cmd(char *buffer) {
-    buffer[1023] = '\0';
-    puts(buffer);
-    if (strcmp(buffer, 4, "exit") == 0) { 
-        halt; 
+void runCommand(char* buffer) {
+    if (strcmp(buffer,"exit") == 0) {
+        halt;
+    } else if (strcmp(buffer, "help") == 0) {
+        puts("exit: exits the os\nhelp: displays this message\n");
     }
+    
+    return;
 }
+
 
 void kmain(void) {
     puts("-=-= TINYOS =-=-\n");
-    char buffer[1024] = {0};  
+    char buffer[1024];  
     int writePtr = 0;
-
+    char exit[1024] = {'e'};
+    strcpy(exit,4,"exit");
+    puts(exit);
     while (1) {
         puts("\n>");
         writePtr = 0;  
         for (int i = 0; i < 1024; i++) {
-            buffer[i] = 0;
+            buffer[i] = '\0';
         }
 
-        while (writePtr < sizeof(buffer) - 1) {  
+        while (writePtr < 1024 - 1) {
             char c = getc();
-            
-            switch(c) {
-                case '\b':  
-                    if (writePtr > 0) {
-                        writePtr--;
-                        buffer[writePtr] = 0;
-                        putc('\b');
-                    }
-                    break;
-                
-                case '\n':  
+            if (c == 0) continue;
+
+            if (c == '\b') {
+                if (writePtr > 0) {
+                    writePtr--;
                     buffer[writePtr] = '\0';  
-                    goto checkCommand;
-                    break;                
-                default:
-                    buffer[writePtr++] = c;
-                    putc(c);
-                    break;
+                    puts("\b \b");  
+                }
+            } else if (c == '\n') {
+                putc(c);
+                buffer[writePtr] = '\0';
+                break;
+            } else {
+                buffer[writePtr++] = c;
+                putc(c);
             }
         }
-        checkCommand:
-            cmd(buffer);
+        runCommand(buffer);
 
     }   
     

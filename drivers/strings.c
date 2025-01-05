@@ -1,14 +1,14 @@
 #include "include/strings.h"
 
 
-int strcmp(char *str1, int len, char *str2) {
-    for (int ptr = 0; ptr < len; ptr++) {
-        if (str1[ptr] != str2[ptr]) {
-            return 1;
-        }
+int strcmp(char *str1, char *str2) {
+    while (*str1 && (*str1 == *str2)) {
+        str1++;
+        str2++;
     }
-    return 0;
+    return *(const unsigned char*)str1 - *(const unsigned char*)str2;
 }
+
 
 void strcpy(char *to, int len,char *from) {
     for (int i = 0; i < len | from[i] != '\0'; i++) {
