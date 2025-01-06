@@ -89,6 +89,8 @@ void mvCursor(int nx, int ny) {
     return;
 } 
 void clearScrn() {
+    CursorX = 0;
+    CursorY = 0;
     uint16_t *vga = (uint16_t *)VGA_ADDRESS;
     for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT; i++) {
         vga[i] = 0x0F00; // Clear screen to white text on black background

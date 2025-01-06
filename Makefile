@@ -17,11 +17,16 @@ cpu.o : drivers/cpu.c
 strings.o : drivers/strings.c
 	gcc -m32 -g -fno-stack-protector -fno-builtin -c drivers/strings.c -o objects/strings.o
 
+filesys.o : drivers/filesys.c
+	gcc -m32 -g -fno-stack-protector -fno-builtin -c drivers/filesys.c -o objects/filesys.o
+
+
 boot.o: boot.s
 	nasm -f elf32 boot.s -o objects/boot.o
 
-kernel.bin: kernel.o io.o boot.o cpu.o strings.o linker.ld
-	ld -m elf_i386 -T linker.ld -o kernel objects/stdio.o objects/cpu.o objects/kernel.o objects/boot.o objects/strings.o
+
+kernel.bin: kernel.o io.o boot.o cpu.o strings.o  filesys.o linker.ld
+	ld -m elf_i386 -T linker.ld -o kernel objects/stdio.o objects/cpu.o objects/kernel.o objects/boot.o objects/strings.o objects/filesys.o
 	cp kernel OS/boot
 
 OS.iso: kernel.bin
